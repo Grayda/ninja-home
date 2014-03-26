@@ -61,4 +61,4 @@ You can use the Twitter functionality to display messages, errors and just about
 
 * This thing will chew through your hourly Twitter API limit, so set reloading times accordingly
 
-* Right now modals are broken and keep looping. Need to fix that (should have done that before pushing, but I wanted it up now and fix later!)
+* Modals are mostly fixed, but a loop error causes timeouts and other issues when all your tweets are dismissed and there are no more to grab.
