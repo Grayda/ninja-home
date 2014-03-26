@@ -3,6 +3,7 @@
 	require_once('class/TwitterAPIExchange.php');
 
 	class clsTwitter {
+		
 
 		function getTweets($user = "", $count = 10, $token = "") { // Gets all the tweets based on details we provide
 			

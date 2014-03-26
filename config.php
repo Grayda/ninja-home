@@ -56,4 +56,6 @@
 
 	$timezone = "Australia/Melbourne"; // Set your timezone here. Used for the "x many hours ago" function and the gmtToLocal function
 
+	$debug = true; // Set this to true and you'll see a bunch of echos or console logs
+
 ?>

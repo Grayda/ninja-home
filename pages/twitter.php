@@ -12,17 +12,23 @@
 ?>
   
 <?php
-
+	$amountToGet = $twitterAmount; // So we don't overwrite our original $twitterAmount variable
 	$ret = array(); // Clear out our results array. This gets filled with tweet info that gets passed to ui::drawTile
 	$modal = ""; // Clear out our modal text. This gets displayed as a modal window, then dismissed on close
+	$dismiss = "";
 	if(!empty($tweets)) { // If we have tweets to show, continue on!
-		for($a = 0; $a <= count($twitterAmount); $a++) { // Loop through our tweets.
+
+		for($a = 0; $a <= $amountToGet - 1; $a++) { // Loop through our tweets.
 			$class = ""; // Reset our class
+
 			if($db->isDismissed($tweets[$a]["id_str"]) == true) { // If we've previously dismissed this tweet, hide it
-				if($a < count($tweets) - 1) { $twitterAmount++; } // Make sure we grab another tweet from the list, otherwise you get x - 1 tweets when you really want x
+				if($a < count($tweets) - 1) { // Make sure we grab another tweet from the list, otherwise you get x - 1 tweets when you really want x
+					$amountToGet++;
+
+				} 
 			}
 			
-			if(strpos($tweets[$a]["text"], "#hide") !== false) { // If we have the #hide tag, then skip this iteration of the loop and go again (i.e. ignore it).
+			if(strpos($tweets[$a]["text"], "#hide") == true) { // If we have the #hide tag, then skip this iteration of the loop and go again (i.e. ignore it).
 				continue;
 			}
 			
@@ -41,14 +47,11 @@
 				array_unshift($ret, array($tweets[$a]["text"], $m->ago($tweets[$a]["created_at"]), $class, $tweets[$a]["id_str"])); // If more than 1 sticky is present, the latest one is at the top
 			} else { // If we're not sticky, just add it to the end like a regular element
 				$ret[] = array($tweets[$a]["text"], $m->ago($tweets[$a]["created_at"]), $class, $tweets[$a]["id_str"]); 		
-
 			}
 			
-				
 		}
 			
 
-	
 			for($i = 0; $i <= count($ret) - 1; $i++) { // Now we come to the tile part! Loop through $ret and write everything out using ui::drawTile
 				$ui->drawTile($m->stripText($m->stripHashtags($ret[$i][0])), $ret[$i][1], "javascript:doDismiss('" . $ret[$i][3] . "')", $ret[$i][2], true, $ret[$i][3]);
 			}

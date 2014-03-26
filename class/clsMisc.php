@@ -1,6 +1,10 @@
 <?php
 
 	class clsMisc { // Miscellaneous functions
+	
+		function debug($text, $var = "", $d = true) {
+			if($d == true) { echo $text . $var . "<br />"; }	
+		}
 		
 		function ago($time) { // Takes a time and gives you a "ago" time in the past (e.g. 3 days ago, 1 minute ago)
 			$time = strtotime($time);
@@ -26,7 +30,7 @@
 		function gmtToLocal($time) { // Converts a GMT time into a local time. Used for the created_at part of tweets. Need to 
 
 			$t = new DateTime($time);
-			$t->setTimezone(new DateTimeZone($timezone));			
+			$t->setTimezone(new DateTimeZone($GLOBALS["timezone"]));			
 			return $t->format("g:i:s A d/m/Y");	
 		}
 		
